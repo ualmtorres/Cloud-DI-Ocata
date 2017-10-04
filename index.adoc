@@ -173,11 +173,7 @@ iface ens3 inet dhcp
 ----
 <2> Añadir esta línea para configurar la MTU tras el arranque
 
-
-
 5. Reiniciar la máquina virtual
-
-
 6. Tras reniciar, comprobamos con ifconfig que el valor de MTU es correcto (1450)
 
 
