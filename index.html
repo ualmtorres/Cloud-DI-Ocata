@@ -646,12 +646,40 @@ Si más adelante necesitas crear uno o más volúmenes para tu instancia, podrá
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modificar el tamaño MTU actual</p>
+<p>Comprueba el nombre de tu interfaz de red (puede ser eth0 o ens3):</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><code>ifconfig</code></p>
+</div>
+<div class="paragraph">
+<p>El nombre de tu interfaz de red puede ser <strong>eth0</strong>, con valor de MTU incorrecto:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/ifconfig_eth0_mtu_incorrecto.png" alt="interfaz de red puede eth0"></span></p>
+</div>
+<div class="paragraph">
+<p>O bien <strong>ens3</strong>, con valor de MTU incorrecto:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/ifconfig_ens3_mtu_incorrecto.png" alt="interfaz de red puede eth0"></span></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Modificar el tamaño MTU actual, en fución del nombre anterior</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
 <p><code>ifconfig eth0 mtu 1450</code></p>
+</div>
+<div class="paragraph">
+<p>O bien</p>
+</div>
+<div class="paragraph">
+<p><code>ifconfig ens3 mtu 1450</code></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -676,6 +704,34 @@ iface eth0 inet dhcp
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>O bien el archivo <code>/etc/network/interfaces.d/50-cloud-init.cfg</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code># The primary network interface
+auto ens3
+iface ens3 inet dhcp
+    post-up /sbin/ifconfig ens3 mtu 1450 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Añadir esta línea para configurar la MTU tras el arranque</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/ifconfig_eth0_mtu_1450.png" alt="interfaz de red puede eth0 correcto"></span></p>
+</div>
+<div class="paragraph">
+<p>O bien</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/ifconfig_ens3_mtu_1450.png" alt="interfaz de red puede ens3 correcto"></span></p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="trueajuste-de-mtu-en-instancias-windows"><a class="anchor" href="#trueajuste-de-mtu-en-instancias-windows"></a>5.2. Ajuste de MTU en instancias Windows</h3>
@@ -697,7 +753,7 @@ iface eth0 inet dhcp
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-04 00:21:37 CEST
+Last updated 2017-10-04 13:22:32 H
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
