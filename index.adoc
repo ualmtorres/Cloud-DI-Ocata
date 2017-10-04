@@ -131,9 +131,25 @@ Debido a una discrepancia entre la configuración de red de la versión anterior
 
 `sudo su -`
 
-3. Modificar el tamaño MTU actual 
+3. Comprueba el nombre de tu interfaz de red (puede ser eth0 o ens3): 
+
+`ifconfig`
+
+El nombre de tu interfaz de red puede ser **eth0**, con valor de MTU incorrecto:
+
+image:ifconfig_eth0_mtu_incorrecto.png[interfaz de red puede eth0]
+
+O bien **ens3**, con valor de MTU incorrecto:
+
+image:ifconfig_ens3_mtu_incorrecto.png[interfaz de red puede eth0]
+
+3. Modificar el tamaño MTU actual, en fución del nombre anterior
     
 `ifconfig eth0 mtu 1450`
+
+O bien 
+
+`ifconfig ens3 mtu 1450`
     
 4. Modificar el archivo `/etc/network/interfaces.d/eth0.cfg`
 
@@ -146,7 +162,29 @@ iface eth0 inet dhcp
 ----
 <1> Añadir esta línea para configurar la MTU tras el arranque
 
+O bien el archivo `/etc/network/interfaces.d/50-cloud-init.cfg`
+
+[source]
+----
+# The primary network interface
+auto ens3
+iface ens3 inet dhcp
+    post-up /sbin/ifconfig ens3 mtu 1450 <2>
+----
+<2> Añadir esta línea para configurar la MTU tras el arranque
+
+
 5. Reiniciar la máquina virtual
+
+
+6. Tras reniciar, comprobamos con ifconfig que el valor de MTU es correcto (1450)
+
+
+image:ifconfig_eth0_mtu_1450.png[interfaz de red puede eth0 correcto]
+
+O bien
+
+image:ifconfig_ens3_mtu_1450.png[interfaz de red puede ens3 correcto]
 
 ### Ajuste de MTU en instancias Windows
 
